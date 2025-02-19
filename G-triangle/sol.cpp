@@ -1,43 +1,40 @@
-#include <bits/stdc++.h>
-
+#include <iostream>
+#include <string>
+#include <bitset>
+#include <vector>
 using namespace std;
-struct tg
-{
-    int st;
-    int e;
-};
+int n;
+vector<string> a;
+bitset<3005> set_adj[3005];
 
-bool comp(tg a, tg b)
-{
-    return a.e <= b.e;
-}
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    int n, k;
-    cin >> n >> k;
-    vector<tg> s;
-    for (int i = 1; i <= n; i++)
-    {
-        int a, b;
-        cin >> a >> b;
-        s.push_back({a, b});
-    }
-    sort(s.begin(), s.end(), comp);
-    int ans = 0;
-    multiset<int> ss;
-    for (int i = 0; i < k; i++)
-        ss.insert(0);
+    cin >> n;
+    a.resize(n);
     for (int i = 0; i < n; i++)
     {
-        auto it = ss.upper_bound(s[i].st);
-        if (it != ss.begin())
+        cin >> a[i];
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
         {
-            ans++;
-            it--;
-            ss.erase(it);
-            ss.insert(s[i].e);
+            if (a[i][j] == '1')
+            {
+                set_adj[i][j] = 1;
+            }
+        }
+    }
+    long long ans = 0LL;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (a[i][j] == '1')
+            {
+                bitset<3005> common = set_adj[i] & set_adj[j];
+                ans += common.count();
+            }
         }
     }
     cout << ans;
