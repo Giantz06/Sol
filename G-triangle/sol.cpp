@@ -5,7 +5,7 @@
 using namespace std;
 int n;
 vector<string> a;
-bitset<3005> set_adj[3005];
+bitset<3005> upperbit[3005];
 
 int main()
 {
@@ -21,7 +21,7 @@ int main()
         {
             if (a[i][j] == '1')
             {
-                set_adj[i][j] = 1;
+                upperbit[i][j] = 1;
             }
         }
     }
@@ -32,7 +32,7 @@ int main()
         {
             if (a[i][j] == '1')
             {
-                bitset<3005> common = set_adj[i] & set_adj[j];
+                bitset<3005> common = upperbit[i] & upperbit[j];
                 ans += common.count();
             }
         }

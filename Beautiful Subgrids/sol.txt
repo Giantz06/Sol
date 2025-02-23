@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+#pragma GCC target("popcnt") //quan trong
+using namespace std;
+int n;
+long long ans;
+bitset<3005> g[3005];
+int cal(int X)
+{
+    return X * (X - 1);
+}
+int main()
+{
+    cin.sync_with_stdio(0);
+    cin.tie(0);
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> g[i];
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            ans += 1ll * cal((g[i] & g[j]).count());
+        }
+    }
+    cout << (ans >> 1);
+    return 0;
+}

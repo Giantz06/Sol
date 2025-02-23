@@ -54,7 +54,7 @@ int main()
         }
         t.push(i);
     }
-    long long max = 0;
+    long long max = 1;
     for (int i = 1; i <= n; i++)
     {
         long long area = 1ll * k[i] * (r[i] - l[i] - 1);
@@ -62,7 +62,5 @@ int main()
             max = area;
     }
     cout << max;
-    freopen("test_input.txt", "r", stdin); // Đọc input từ file
-    freopen("output.txt", "w", stdout);    // Ghi output ra file (nếu cần)
     return 0;
 }
