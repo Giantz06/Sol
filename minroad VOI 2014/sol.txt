@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+int inf = 1000000007;
+int main()
+{
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+  int n, a, b;
+  cin >> n >> a >> b;
+  vector<pair<int, int>> d;
+  for (int i = 1; i <= n; i++)
+  {
+    int p, k;
+    cin >> p >> k;
+    d.push_back({p, k});
+  }
+  int l = 0;
+  int sum1 = 0; // so cay tung
+  int sum2 = 0; // so cay truc
+  int ans = inf;
+  sort(d.begin(), d.end());
+  for (int i = 0; i < n; i++)
+  {
+    if (d[i].second == 1)
+      sum1++;
+    else
+      sum2++;
+    while (sum1 >= a && sum2 >= b)
+    {
+      ans = min(ans, d[i].first - d[l].first);
+      if (d[l].second == 1)
+      {
+        sum1--;
+      }
+      else
+      {
+        sum2--;
+      }
+      l++;
+    }
+  }
+  cout << (ans == inf ? -1 : ans);
+  return 0;
+}
