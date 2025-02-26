@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+int q, x;
+int use[400005];
+
+int main()
+{
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+  cin >> q >> x;
+  int a[q + 2];
+  int mex = 0;
+  for (int i = 1; i <= q; i++)
+  {
+    cin >> a[i];
+    use[a[i] % x]++;
+    while (1)
+    {
+      if (use[mex % x] != 0)
+      {
+        use[mex % x]--;
+        mex++;
+      }
+      else
+        break;
+    }
+    cout << mex << endl;
+  }
+
+  return 0;
+}
