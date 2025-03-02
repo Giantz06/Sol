@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+  int n, k;
+  cin >> n >> k;
+  long long x[n + 1];
+  long long lo = 0;
+  long long hi = 0;
+  for (int i = 1; i <= n; i++)
+  {
+    cin >> x[i];
+    hi += x[i];
+    lo = max(lo, x[i]);
+  }
+  long long ans = 0;
+  while (lo <= hi)
+  {
+    long long mid = (lo + hi) >> 1;
+    int numOfArray = 0;
+    long long sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+      sum += x[i];
+      if (sum > mid)
+      {
+        numOfArray++;
+        sum = x[i];
+      }
+    }
+    ++numOfArray;
+    if (numOfArray > k)
+      lo = mid + 1;
+    else
+    {
+      ans = mid;
+      hi = mid - 1;
+    }
+  }
+  cout << ans;
+  return 0;
+}

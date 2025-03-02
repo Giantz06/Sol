@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+int numTest;
+
+int inf = 1e9 + 2;
+int main()
+{
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+  cin >> numTest;
+  for (int i = 1; i <= numTest; i++)
+  {
+    int n, c;
+    cin >> n >> c;
+    int x[n + 1];
+    for (int i = 1; i <= n; i++)
+      cin >> x[i];
+    sort(x + 1, x + n + 1);
+    int lo = x[2] - x[1];
+    int hi = x[n] - x[1];
+    int ans = inf;
+    while (lo <= hi)
+    {
+      int mid = (lo + hi) >> 1;
+      int cnt = 1;
+      int j = 1;
+      for (int i = 2; i <= n; i++)
+      {
+        int kc = (x[i] - x[j]);
+        if (kc >= mid)
+        {
+          cnt++;
+          j = i;
+        }
+        if (cnt > c - 1)
+        {
+          ans = mid;
+          lo = mid + 1;
+          break;
+        }
+      }
+      if (cnt < c)
+      {
+        hi = mid - 1;
+      }
+    }
+    cout << ans << endl;
+  }
+  return 0;
+}
