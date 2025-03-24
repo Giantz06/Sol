@@ -1,0 +1,49 @@
+#include <iostream> 
+#include <fstream> 
+#include <algorithm>
+#include <math.h>
+#include <vector> 
+
+using namespace std;
+
+int n, k, s, t;
+vector<int> g; 
+int cost[200005], fuel[200005]; 
+
+int main() {
+  cin >> n >> k >> s >> t;
+  for (int i = 1; i <= n; i++) {
+    cin >> cost[i] >> fuel[i]; 
+  }
+  g.push_back(0);
+  g.push_back(s); 
+  for (int i = 1; i <= k; i++) {
+    int position;
+    cin >> position;
+    g.push_back(position); 
+  }
+  sort(g.begin(), g.end()); 
+  int lo = 1; 
+  int hi = 1000000000; 
+  int minFuel = -1; 
+  while (lo <= hi) {
+    int mid = (lo + hi) / 2;
+    int L = mid;
+    int sumTime = 0; 
+    bool found = true; 
+    for (int i = 1; i < (int) g.size(); i++) {
+      int d = g[i] - g[i - 1]; 
+      int y = min(L - d, d); 
+      if (y < 0) {
+        found = false;
+        break;   
+      }
+      sumTime += 2 * d - y; 
+    }
+    if (found) {
+      if (sumTime <= t) {
+        minFuel = L; 
+        hi = mid - 1; 
+      }  
+      else {
+        lo = mid + 
