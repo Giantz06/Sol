@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const int inf = INT_MAX;
+int numbTest;
+int n, m;
+int a[200006], b[2005];
+int dp[2005][2005]; // dp[i][j]: vị trí nhỏ nhất trong dãy a khi xét i phần tử đầu của b và lấy được subsequence độ dài j
+
+int main () {
+    cin >> numbTest;
+    for (int t = 1; t <= numbTest; t++) {
+        cin >> n >> m;
+        vector<int> v[2006];
+        for (int i = 1; i <= n; i++) {
+            cin >> a[i];
+            v[a[i]].push_back(i);
+        }
+        for (int i = 1; i <= m; i++) cin >> b[i];
+
+        // Khởi tạo dp
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= m; j++) dp[i][j] = inf;
+        }
+        dp[0][0] = 0;
+
+        // DP
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j <= i; j++) {
+                if (dp[i][j] == inf) continue;
+
+                // Không lấy b[i+1]
+                dp[i+1][j] = min(dp[i+1][j], dp[i][j]);
+
+                // Lấy b[i+1]
+                int x = b[i+1];
+                auto it = upper_bound(v[x].begin(), v[x].end(), dp[i][j]);
+                if (it != v[x].end()) {
+                    dp[i+1][j+1] = min(dp[i+1][j+1], *it);
+                }
+            }
+        }
+
+        // Tìm đáp án
+        int ans = 0;
+        for (int j = 0; j <= m; j++) {
+            if (dp[m][j] != inf) ans = j;
+        }
+        cout << ans << endl;
+    }
+    return 0;
+}
