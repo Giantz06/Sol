@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+const int MAX = 25;
+int numTest, n, m;
+int dx[4] = {1, 0, -1, 0};
+int dy[4] = {0, 1, 0, -1};
+int maze[MAX][MAX];
+bool visit[MAX][MAX];
+
+void dfs(int u, int v) {
+    visit[u][v] = true;
+    for (int k = 0; k < 4; k++) {
+        int u1 = u + dx[k];
+        int v1 = v + dy[k];
+        if (u1 >= 0 && u1 < n && v1 >= 0 && v1 < m &&
+            !visit[u1][v1] && maze[u1][v1] == 0) {
+            dfs(u1, v1);
+        }
+    }
+}
+
+int main() {
+    cin >> numTest;
+    while (numTest--) {
+        cin >> n >> m;
+        vector<pair<int, int>> openings;
+
+        for (int i = 0; i < n; i++) {
+            string a; cin >> a;
+            for (int j = 0; j < m; j++) {
+                maze[i][j] = (a[j] == '#' ? 1 : 0);
+                visit[i][j] = false;
+
+                if (maze[i][j] == 0 &&
+                    (i == 0 || i == n - 1 || j == 0 || j == m - 1)) {
+                    openings.emplace_back(i, j);
+                }
+            }
+        }
+
+        if (openings.size() != 2) {
+            cout << "invalid\n";
+            continue;
+        }
+
+        dfs(openings[0].first, openings[0].second);
+        if (visit[openings[1].first][openings[1].second])
+            cout << "valid\n";
+        else
+            cout << "invalid\n";
+    }
+    return 0;
+}

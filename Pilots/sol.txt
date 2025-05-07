@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const int inf = INT_MAX;
+
+typedef struct wage {
+    int x; // lương lái chính
+    int y; // lương trợ lý
+} wage;
+
+wage p[10005];
+int f[10005][5005]; // f[i][j]: i người đầu, j lái chính
+
+int main() {
+    int n;
+    cin >> n;
+
+    for (int i = 1; i <= n; i++) {
+        cin >> p[i].x >> p[i].y;
+    }
+
+    // Khởi tạo
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= n / 2; j++) {
+            f[i][j] = inf;
+        }
+    }
+    f[0][0] = 0;
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j <= min(i, n / 2); j++) {
+            // Nếu chọn phi công i làm trợ lý
+            if (i - j > j && f[i - 1][j] != inf) {
+                f[i][j] = min(f[i][j], f[i - 1][j] + p[i].y);
+            }
+            // Nếu chọn phi công i làm lái chính
+            if (j > 0 && f[i - 1][j - 1] != inf) {
+                f[i][j] = min(f[i][j], f[i - 1][j - 1] + p[i].x);
+            }
+        }
+    }
+
+    cout << f[n][n / 2] << endl;
+    return 0;
+}
