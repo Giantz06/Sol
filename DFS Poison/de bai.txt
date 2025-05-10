@@ -1,0 +1,35 @@
+Bạn đang đứng trong một phòng thí nghiệm chất độc rất nguy hiểm. Bạn cần chạy thoát khỏi
+phòng thí nghiệm này. Phòng thí nghiệm có thể được xem như một ma trận hình chữ nhật gồm
+N dòng và M cột. Ô thứ j trên dòng thứ i được gọi là ô (i, j). Bạn hiện tại đang đứng tại ô (1, 1) và
+lối thoát ở ô (N, M). Tuy nhiên, việc thoát ra sẽ hoàn toàn không dễ dàng như bạn nghĩ. Cụ thể,
+những ô trên ma trận có thể được chia thành những loại như sau:
+- Ô (i, j) là '.', đây là ô trống, bạn hoàn toàn có thể vào được ô này mà không gặp bất kì nguy
+hiểm nào cả.
+- Ô (i, j) là '#', đây là bức tường. Bạn không thể vào ô này, càng không thể leo qua tường để
+đến một ô khác.
+- Ô (i, j) là một con số từ '1' đến '9', đây là ô có chứa khí độc. Nếu bạn vào ô này, bạn sẽ bị
+nhiễm thêm một lượng độc bằng đúng con số trên ô này.
+- Ô (i, j) là 'S', đây là ô có chứa thuốc giải độc. Nếu bạn vào được ô này, toàn bộ lượng độc
+trong người của bạn sẽ được đào thải và có thể tiếp tục cuộc hành trình chạy trốn.
+
+Các bác sĩ đã tính toán rằng, nếu lượng độc của bạn bằng 10 hoặc nhiều hơn, bạn sẽ chết trước
+khi kịp đến cửa thoát. Ban đầu lượng độc trong người của bạn là 0. Trong mỗi bước di chuyển,
+bạn chỉ được phép di chuyển từ ô hiện tại sang một ô kề cạnh. Tức nếu bạn đang đứng ở ô (i, j),
+bạn chỉ có thể di chuyển qua 1 trong 4 ô (i + 1, j), (i, j + 1), (i - 1, j) hoặc (i, j - 1). Bạn có thể thoát
+khỏi căn phòng thí nghiệm nguy hiểm này không ?
+- Dữ liệu đầu vào (SC5.INP):
+o Đọc từ file SC5.INP.
+o Dòng đầu tiên gồm một số nguyên dương T (1 ≤ T ≤ 40) là số lượng bộ dữ liệu
+cần xử lý
+o T bộ dữ liệu tiếp theo, mỗi bộ dữ liệu được tổ chức như sau:
+▪ Dòng thứ 1 gồm 2 số nguyên dương N và M, tương ứng là số dòng và số
+cột của ma trận.
+▪ N dòng sau, mỗi dòng gồm M ký tự. Ký tự thứ j trên dòng i là ký tự thể hiện
+trạng thái của ô (i, j). Ký tự là 1 trong 4 loại kể trên. Dữ liệu bảo đảm ký tự
+ở ô (1, 1) và ô (N, M) là 2 ký tự '.'
+
+- Dữ liệu đầu ra (SC5.OUT):
+o Ghi vào file SC5.OUT.
+o Gồm T dòng, dòng thứ i là kết quả của bộ dữ liệu thứ i, gồm một chuỗi duy nhất,
+là "possible" nếu bạn có thể đến được ô (N, M). Nếu chuỗi là "impossible", bạn
+không thể thoát hoặc bạn chết trước khi kịp thoát.
