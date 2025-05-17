@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+#include <cstdio>
+
+using namespace std;
+
+int n, numDays;
+vector<int> adj[200005];
+int numb[200005], low[200005];
+int timeDfs = 0, bridges = 0;
+unordered_map<int, bool> mymap[200005];
+
+void dfs(int u, int father) {
+    numb[u] = low[u] = ++timeDfs;
+    for (int v : adj[u]) {
+        if (v == father) continue;
+        if (numb[v] == 0) {
+            dfs(v, u);
+            low[u] = min(low[u], low[v]);
+            if (low[v] == numb[v] && !mymap[u][v])
+                bridges++;
+        } else {
+            low[u] = min(low[u], numb[v]);
+        }
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i < n; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    scanf("%d", &numDays);
+    for (int i = 1; i <= numDays; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+        mymap[u][v] = mymap[v][u] = true;
+    }
+
+    dfs(1, -1);
+    printf("%d\n", bridges);
+    return 0;
+}
