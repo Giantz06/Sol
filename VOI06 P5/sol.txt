@@ -1,0 +1,94 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <math.h>
+
+using namespace std;
+const int sex = 2005;
+int n, m;
+vector<int> adj[sex];
+vector<int> adj2[sex];
+bool haveIn[sex];
+int numb[sex], low[sex];
+int root[sex];
+int timeDfs = 0;
+bool deleted[sex];
+stack<int> store;
+
+void dfs(int u) {
+  timeDfs++;
+  numb[u] = low[u] = timeDfs;
+  store.push(u);
+  for (int i = 0; i < (int)adj[u].size(); i++) {
+    int v = adj[u][i];
+    if (deleted[v] == true) {
+      continue;
+    }
+    if (numb[v] == 0) {
+      dfs(v);
+      low[u] = min(low[u], low[v]);
+    } else {
+      low[u] = min(low[u], numb[v]);
+    }
+  }
+  if (low[u] == numb[u]) {
+    do {
+      int v = store.top();
+      store.pop();
+      deleted[v] = true;
+      root[v] = u;
+      if (v == u) {
+        break;
+      }
+    } while (true);
+  }
+}
+
+int main() {
+  cin >> n >> m;
+  for (int i = 1; i <= m; i++) {
+    int u, v;
+    cin >> u >> v;
+    adj[u].push_back(v);
+  }
+  for (int i = 1; i <= n; i++) {
+    if (numb[i] == 0) {
+      dfs(i);
+    }
+  }
+  for (int u = 1; u <= n; u++) {
+    for (int i = 0; i < (int)adj[u].size(); i++) {
+      int v = adj[u][i];
+      int rootu = root[u];
+      int rootv = root[v];
+      if (rootu != rootv) {
+        haveIn[rootv] = true;
+        adj2[rootu].push_back(rootv);
+      }
+    }
+  }
+int cnt1 = 0;
+int cnt2 = 0;
+int root1, root2;
+for (int u = 1; u <= n; u++) {
+  if (u == root[u]) {
+    if (haveIn[u] == false) {
+      cnt1++;
+      root1 = u;
+    }
+    if (adj2[u].size() == 0) {
+      cnt2++;
+      root2 = u;
+    }
+  }
+}
+
+if (cnt1 > 1 || cnt2 > 1) {
+  cout << "NO\n";
+} else {
+  cout << "YES\n";
+  cout << root2 << " " << root1;
+}
+
+  return 0;
+}
