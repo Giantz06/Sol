@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+int root[10004];
+int findroot(int u){
+    if(u==root[u]) return u;
+    int res = findroot(root[u]);
+    root[u] = res;
+    return root[u];
+}
+int p;
+int main(){
+    cin>>p;
+    for(int i = 1;i<=10004;i++) root[i] = i;
+    for(int i = 1;i<=p;i++){
+        int x,y,z; cin>>x>>y>>z;
+        if(z==1){
+            int ru = findroot(root[x]); int rv = findroot(root[y]);
+            if(ru==rv) continue;
+            root[ru] = rv;
+        }
+        else{
+            int ru = findroot(root[u]); int rv = findroot(root[y]);
+            if(ru!=rv) cout<<"0\n";
+            else cout<<"1\n";
+            
+        }
+    }
+
+
+}
