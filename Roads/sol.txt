@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+const int inf = 1000000007; 
+int dist[105][10005]; 
+int k, n, m, numTest;
+
+struct neighbor {
+  int to, length, money; 
+};
+
+vector<neighbor> adj[105];  
+
+struct element {
+  int distance, u, money; 
+  bool operator < (const element &other) const {
+    return distance > other.distance;
+  }
+};
+
+int dijkstra() {
+  priority_queue<element> pq; 
+  for (int i = 1; i <= n; i++) {
+    for (int money = 0; money <= k; money++) {
+      dist[i][money] = inf; 
+    }
+  }
+
+  dist[1][0] = 0;
+  pq.push({0, 1, 0}); 
+  
+  while (!pq.empty()) {
+    element e = pq.top();
+    pq.pop();
+
+    int distance = e.distance;
+    int u = e.u;
+    int money = e.money;
+
+    if (u == n) return distance; 
+
+    if (distance != dist[u][money]) continue;
+
+    for (auto neigh : adj[u]) {
+      int v = neigh.to;
+      int l = neigh.length;
+      int cost = neigh.money;
+
+      if (money + cost <= k && dist[v][money + cost] > dist[u][money] + l) {
+        dist[v][money + cost] = dist[u][money] + l;
+        pq.push({dist[v][money + cost], v, money + cost});
+      }
+    }
+  }
+
+  return -1;
+}
+
+int main () {
+  cin >> numTest; 
+  for (int testCase = 1; testCase <= numTest; testCase++) {
+    cin >> k >> n >> m;
+
+    for (int i = 1; i <= n; i++) adj[i].clear(); 
+
+    for (int i = 1; i <= m; i++) {
+      int u, v, length, money;
+      cin >> u >> v >> length >> money; 
+      adj[u].push_back({v, length, money}); 
+    }
+
+    cout << dijkstra() << endl; 
+  }
+
+  return 0; 
+}
